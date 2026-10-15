@@ -22,5 +22,5 @@ uv tool update-shell
 ## Usage
 
 ```sh
-behindit "[url]"
+behindit [url]
 ```
