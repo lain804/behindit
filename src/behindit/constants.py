@@ -1,0 +1,2 @@
+MOBILE_USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 26_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/155.0.0.0 Mobile/15E148 Safari/604.1"
+TIKTOK_SHARE_INFO_SETTING_OFF_CODE = 10202
