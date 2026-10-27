@@ -1,10 +1,10 @@
 [project]
 name = "behindit"
 version = "0.1.0"
-description = "Add your description here"
+description = "Find the person behind a Tiktok or Instagram video share link"
 readme = "README.md"
 authors = [
-    { name = "lain", email = "lain" }
+    { name = "lain", email = "lain@lain.ai" }
 ]
 requires-python = ">=3.13"
 dependencies = [
