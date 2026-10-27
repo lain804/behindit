@@ -1,21 +1,26 @@
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from .constants import MOBILE_USER_AGENT
+from behindit.constants import MOBILE_USER_AGENT, EXIT_FAILURE
 import json
 import jmespath
+import logging
 
 def process_url(url):
     headers = {
         "User-Agent": MOBILE_USER_AGENT
     }
 
-    response = requests.get(
-        url=url,
-        headers=headers,
-        impersonate="chrome"
-    )
-    response.raise_for_status()
-
+    try:
+        response = requests.get(
+            url=url,
+            headers=headers,
+            impersonate="chrome"
+        )
+        response.raise_for_status()
+    except Exception as e:
+        logging.exception(f"Failed to make request: {e}")
+        exit(EXIT_FAILURE)
+    
     soup = BeautifulSoup(
         markup=response.text,
         features="lxml"
@@ -36,16 +41,19 @@ def process_url(url):
             break
 
     if sharer_info_json is None:
-        raise RuntimeError("Failed to find sharer_info_json")
+        logging.error("Failed to find sharer_info_json")
+        exit(EXIT_FAILURE)
     
     sharer_info_deserialized = json.loads(sharer_info_json)
 
+    # um
     sender_info_expression = "require[0][3][0].__bbox.require[0][3][1].__bbox.result.data.xig_polaris_media.user_for_shid_logged_out"
     
     sender_info = jmespath.search(sender_info_expression,sharer_info_deserialized)
     
     if not sender_info:
-        raise RuntimeError("Failed to find sender_info using jmespath search expression")
+        logging.error("Failed to find sender_info using jmespath search expression")
+        exit(EXIT_FAILURE)
 
     # trick to put profile link at the top
     sender_info = {
