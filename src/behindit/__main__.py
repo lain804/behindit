@@ -64,7 +64,7 @@ def main():
 
     logging.basicConfig(
         level=logging_level,
-        format="[%(asctime)s] [%(levelname)-8s] %(message)s",
+        format="[%(asctime)s] [%(levelname)8s] %(message)s",
     )
 
     process_url(args.url)
